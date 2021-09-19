@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Automated_AI_Video_Processing.ProcessExecution;
 
 namespace Automated_AI_Video_Processing.AiProcessors
@@ -27,22 +28,15 @@ namespace Automated_AI_Video_Processing.AiProcessors
 
         public void runAsync()
         {
-            string[] arguments = new string[]
-            {
-                "-i",
+            string args = String.Format("-i \"{0}\" -f {1} -s {2} -m {3} -c {4}",
                 inputFilename,
-                "-f",
                 "mov_proreshq",
-                "-s",
-                "1",
-                "-m",
+                1,
                 "amq-13",
-                "-c",
-                CudaDevice.ToString()
-            };
+                CudaDevice);
             
-            LaunchProcess process = new LaunchProcess(VeaiExeLocation, arguments);
-            process.run();
+            LaunchProcess process = new LaunchProcess(VeaiExeLocation, args);
+            process.run(false);
         }
     }
 }

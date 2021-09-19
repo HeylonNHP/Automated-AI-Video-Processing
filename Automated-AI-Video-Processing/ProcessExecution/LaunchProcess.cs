@@ -13,10 +13,10 @@ namespace Automated_AI_Video_Processing.ProcessExecution
         public DataReceivedEventHandler stdOutOutputEvent;
 
 
-        public LaunchProcess(string filename, string[] args)
+        public LaunchProcess(string filename, string args)
         {
             selectedProcess.StartInfo.FileName = filename;
-            parseArgumentArray(args);
+            selectedProcess.StartInfo.Arguments = args;
 
             selectedProcess.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
             {
@@ -27,12 +27,6 @@ namespace Automated_AI_Video_Processing.ProcessExecution
                 stdOutOutputEvent.Invoke(sender, eventArgs);
             };
         }
-
-        public void parseArgumentArray(string[] args)
-        {
-            selectedProcess.StartInfo.Arguments = String.Join(",", args);
-        }
-
         public ProcessStartInfo getStartInfo
         {
             get { return selectedProcess.StartInfo; }
