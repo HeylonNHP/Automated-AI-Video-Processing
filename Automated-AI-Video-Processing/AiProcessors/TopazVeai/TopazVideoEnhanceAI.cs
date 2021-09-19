@@ -35,8 +35,8 @@ namespace Automated_AI_Video_Processing.AiProcessors
 
             string args = String.Format("-i \"{0}\" -f {1} -s {2} -m {3} -c {4}",
                 inputFilename,
-                "mov_proreshq",
-                1,
+                outputFormat.ToString(),
+                CudaDevice,
                 modelName,
                 CudaDevice);
             
