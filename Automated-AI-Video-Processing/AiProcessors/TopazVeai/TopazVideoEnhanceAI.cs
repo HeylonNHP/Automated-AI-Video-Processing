@@ -7,8 +7,6 @@ namespace Automated_AI_Video_Processing.AiProcessors
 {
     public class TopazVideoEnhanceAI
     {
-        private static string VeaiExeLocation = "C:\\Program Files\\Topaz Labs LLC\\Topaz Video Enhance AI\\veai.exe";
-        
         private string inputFilename;
         private TopazVeaiOutputFormats outputFormat;
         private TopazVeaiModels AiModel;
@@ -51,7 +49,7 @@ namespace Automated_AI_Video_Processing.AiProcessors
                 modelName,
                 CudaDevice);
             
-            LaunchProcess process = new LaunchProcess(VeaiExeLocation, args);
+            LaunchProcess process = new LaunchProcess(ProgramFilePaths.TopazVeaiLocation, args);
             process.redirectStdOut = true;
             process.redirectStdErr = true;
             process.run(false);
