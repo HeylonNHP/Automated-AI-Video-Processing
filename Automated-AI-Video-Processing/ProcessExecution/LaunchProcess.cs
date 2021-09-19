@@ -16,6 +16,7 @@ namespace Automated_AI_Video_Processing.ProcessExecution
 
         public LaunchProcess(string filename, string args)
         {
+            selectedProcess.EnableRaisingEvents = true;
             selectedProcess.StartInfo.FileName = filename;
             selectedProcess.StartInfo.Arguments = args;
 
