@@ -11,6 +11,7 @@ namespace Automated_AI_Video_Processing.ProcessExecution
         private Process selectedProcess = new Process();
         public DataReceivedEventHandler stdErrOutputEvent;
         public DataReceivedEventHandler stdOutOutputEvent;
+        public EventHandler processExited;
 
 
         public LaunchProcess(string filename, string args)
@@ -20,11 +21,15 @@ namespace Automated_AI_Video_Processing.ProcessExecution
 
             selectedProcess.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
             {
-                stdErrOutputEvent.Invoke(sender, e);
+                stdErrOutputEvent?.Invoke(sender, e);
             };
             selectedProcess.OutputDataReceived += (sender, eventArgs) =>
             {
-                stdOutOutputEvent.Invoke(sender, eventArgs);
+                stdOutOutputEvent?.Invoke(sender, eventArgs);
+            };
+            selectedProcess.Exited += (sender, eventArgs) =>
+            {
+                processExited?.Invoke(sender,eventArgs);
             };
         }
         public ProcessStartInfo getStartInfo
