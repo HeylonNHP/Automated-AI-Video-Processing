@@ -2,6 +2,7 @@
 using System.Threading;
 using Automated_AI_Video_Processing.AiProcessors;
 using Automated_AI_Video_Processing.BatchFolderActions.TopazVeai;
+using Automated_AI_Video_Processing.FFmpegFunctions;
 
 namespace Automated_AI_Video_Processing
 {
@@ -11,10 +12,16 @@ namespace Automated_AI_Video_Processing
         {
             Console.WriteLine("Hello World!");
             
-            runFolder();
+            //runFolder();
+            testFFmpeg();
             
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
+        }
+
+        private static void testFFmpeg()
+        {
+            Console.WriteLine(GeneralFFmpegFunctions.getResolution(@"N:\stuph\veai5\25\Ind.webm"));
         }
 
         private static void testVeai()

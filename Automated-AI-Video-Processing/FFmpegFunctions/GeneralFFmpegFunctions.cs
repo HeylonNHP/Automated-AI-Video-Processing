@@ -15,10 +15,10 @@ namespace Automated_AI_Video_Processing.FFmpegFunctions
             string args = $"-i {path}";
             LaunchProcess process = new LaunchProcess(ProgramFilePaths.FFmpeg, args);
 
-            process.redirectStdOut = true;
-            StreamReader stdOut = process.stdOut;
-            
+            process.redirectStdErr = true;
             process.run();
+            StreamReader stdOut = process.stdErr;
+
 
             string line = stdOut.ReadLine();
             while (line != null)
