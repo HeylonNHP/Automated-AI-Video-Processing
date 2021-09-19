@@ -3,5 +3,7 @@
     public static class ProgramFilePaths
     {
         public static string TopazVeaiLocation = @"C:\Program Files\Topaz Labs LLC\Topaz Video Enhance AI\veai.exe";
+
+        public static string FFmpeg = "ffmpeg";
     }
 }
