@@ -33,10 +33,21 @@ namespace Automated_AI_Video_Processing.AiProcessors
         {
             string modelName = getStringFromModelEnum(AiModel);
 
-            string args = String.Format("-i \"{0}\" -f {1} -s {2} -m {3} -c {4}",
+            string scalingArgs = "";
+            switch (scalingDetails.scalingMode)
+            {
+                case TopazVeaiScalingMode.ScalingFactor:
+                    scalingArgs = $"-s {scalingDetails.scalingFactor}";
+                    break;
+                case TopazVeaiScalingMode.TargetResolution:
+                    scalingArgs = $"-d {scalingDetails.outputResolution.X}:{scalingDetails.outputResolution.Y}";
+                    break;
+            }
+
+            string args = String.Format("-i \"{0}\" -f {1} {2} -m {3} -c {4}",
                 inputFilename,
                 outputFormat.ToString(),
-                CudaDevice,
+                scalingArgs,
                 modelName,
                 CudaDevice);
             

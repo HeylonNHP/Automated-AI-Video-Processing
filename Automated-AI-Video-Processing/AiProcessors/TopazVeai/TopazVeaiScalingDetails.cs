@@ -5,7 +5,7 @@ namespace Automated_AI_Video_Processing.AiProcessors
     public class TopazVeaiScalingDetails
     {
         private TopazVeaiScalingMode scaleMode;
-        private float scalingFactor = 1;
+        private float scalingFactorInteral = 1;
         private int outputWidth = 0;
         private int outputHeight = 0;
 
@@ -19,7 +19,7 @@ namespace Automated_AI_Video_Processing.AiProcessors
         public TopazVeaiScalingDetails(float scalingFactor)
         {
             scaleMode = TopazVeaiScalingMode.ScalingFactor;
-            this.scalingFactor = scalingFactor;
+            this.scalingFactorInteral = scalingFactor;
         }
 
         public TopazVeaiScalingMode scalingMode
@@ -30,11 +30,11 @@ namespace Automated_AI_Video_Processing.AiProcessors
             }
         }
 
-        public float setScalingFactor
+        public float scalingFactor
         {
             get
             {
-                return scalingFactor;
+                return scalingFactorInteral;
             }
         }
 

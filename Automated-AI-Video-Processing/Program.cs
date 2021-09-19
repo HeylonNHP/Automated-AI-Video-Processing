@@ -16,13 +16,9 @@ namespace Automated_AI_Video_Processing
                 1,
                 new TopazVeaiScalingDetails(1));
 
-
-            bool done = false;
-
             ai.onTopazVeaiFinished += (sender, eventArgs) =>
             {
-                Console.WriteLine("Process has exited");
-                done = true;
+                Console.WriteLine($"Process has exited - Output: {eventArgs.outputFilePath}");
             };
 
             ai.runAsync();
