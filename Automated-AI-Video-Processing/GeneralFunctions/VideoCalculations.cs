@@ -23,17 +23,17 @@ namespace Automated_AI_Video_Processing.GeneralFunctions
 
             if (isMod2(outWidth))
             {
-                return new Point(desiredHeight, outWidth);
+                return new Point(outWidth,desiredHeight);
             }
 
             outWidth = (int)Math.Ceiling(resolution.X * scaleFactor);
 
             if (isMod2(outWidth))
             {
-                return new Point(desiredHeight, outWidth);
+                return new Point(outWidth,desiredHeight);
             }
 
-            return new Point(desiredHeight, outWidth + 1);
+            return new Point(outWidth + 1,desiredHeight);
         }
     }
 }
