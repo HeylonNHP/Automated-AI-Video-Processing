@@ -12,7 +12,7 @@ namespace Automated_AI_Video_Processing.FFmpegFunctions
         public static Point getResolution(string path)
         {
             Point output = new Point();
-            string args = $"-i {path}";
+            string args = $"-i \"{path}\"";
             LaunchProcess process = new LaunchProcess(ProgramFilePaths.FFmpeg, args);
 
             process.redirectStdErr = true;
