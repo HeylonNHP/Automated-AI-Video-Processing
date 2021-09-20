@@ -3,11 +3,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Automated_AI_Video_Processing.AiProcessors;
+using Automated_AI_Video_Processing.GeneralFunctions;
 
 namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
 {
     public class ProcessAllFilesInFolderTopazVeai
     {
+        private const int DESIRED_HEIGHT = 1080;
         private bool moveNext = true;
         private string processingFolderPath;
 
@@ -43,10 +45,17 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
 
         private void runVeai(string filepath)
         {
+            // Get res
+            var scaleToVideoRes = FFmpegFunctions.GeneralFFmpegFunctions.getResolution(filepath);
+            if (DESIRED_HEIGHT > scaleToVideoRes.Y)
+            {
+                scaleToVideoRes = VideoCalculations.scaleToDesiredResHeightMOD2(scaleToVideoRes, DESIRED_HEIGHT);
+            }
+
             var veaiInstance = new TopazVideoEnhanceAI(
                 filepath, TopazVeaiOutputFormats.mov_proreshq,
                 TopazVeaiModels.amq13,
-                1, new TopazVeaiScalingDetails(1));
+                1, new TopazVeaiScalingDetails(scaleToVideoRes.X, scaleToVideoRes.Y));
 
             veaiInstance.onTopazVeaiFinished += (sender, args) =>
             {
