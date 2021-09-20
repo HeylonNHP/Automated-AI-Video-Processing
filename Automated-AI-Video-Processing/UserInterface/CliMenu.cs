@@ -44,5 +44,18 @@ namespace Automated_AI_Video_Processing.UserInterface
                 }
             }
         }
+
+        public static string getStringInput(string defaultValue = "")
+        {
+            string defaultValueDisplay = defaultValue == "" ? "" : $" (Default: {defaultValue}) ";
+            Console.Write($"{defaultValueDisplay}>>> ");
+            string response = Console.ReadLine();
+            if (response == "")
+            {
+                return defaultValue;
+            }
+
+            return response;
+        }
     }
 }
