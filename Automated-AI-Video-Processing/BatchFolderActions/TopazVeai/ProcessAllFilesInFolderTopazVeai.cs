@@ -9,7 +9,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
 {
     public class ProcessAllFilesInFolderTopazVeai
     {
-        private const int DESIRED_HEIGHT = 1080;
+        public const int DESIRED_HEIGHT = 1080;
         private bool moveNext = true;
         private string processingFolderPath;
 
