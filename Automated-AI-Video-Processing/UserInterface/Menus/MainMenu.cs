@@ -8,7 +8,8 @@ namespace Automated_AI_Video_Processing.UserInterface.Menus
         
         public static CliMenuItem[] mainMenuItems = new[]
         {
-            new CliMenuItem("Run VEAI upscaler", BatchProcessFolderWithVeai)
+            new CliMenuItem("Run VEAI upscaler", BatchProcessFolderWithVeai),
+            new CliMenuItem("Program settings", () => SettingsMenu.menu.DisplayMenu())
         };
 
         public static void BatchProcessFolderWithVeai()
