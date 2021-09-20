@@ -36,6 +36,8 @@ namespace Automated_AI_Video_Processing.UserInterface
                 if (choice > 0 && choice <= menuItemsInternal.Length)
                 {
                     menuItemsInternal[choice - 1].executeAction();
+                }else if (choice == 0)
+                {
                     break;
                 }
                 else
