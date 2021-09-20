@@ -18,7 +18,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             processingFolderPath = path;
         }
 
-        public void runAsync()
+        public void runAsync(int desiredHeight = DESIRED_HEIGHT)
         {
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += (sender, args) =>
@@ -33,7 +33,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
                     }
 
                     moveNext = false;
-                    runVeai(file);
+                    runVeai(file, desiredHeight);
                 }
             };
             backgroundWorker.RunWorkerCompleted += (sender, args) =>
@@ -43,13 +43,13 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             backgroundWorker.RunWorkerAsync();
         }
 
-        private void runVeai(string filepath)
+        private void runVeai(string filepath, int desiredHeight)
         {
             // Get res
             var scaleToVideoRes = FFmpegFunctions.GeneralFFmpegFunctions.getResolution(filepath);
             if (DESIRED_HEIGHT > scaleToVideoRes.Y)
             {
-                scaleToVideoRes = VideoCalculations.scaleToDesiredResHeightMOD2(scaleToVideoRes, DESIRED_HEIGHT);
+                scaleToVideoRes = VideoCalculations.scaleToDesiredResHeightMOD2(scaleToVideoRes, desiredHeight);
             }
 
             var veaiInstance = new TopazVideoEnhanceAI(
