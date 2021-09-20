@@ -3,6 +3,7 @@ using System.Threading;
 using Automated_AI_Video_Processing.AiProcessors;
 using Automated_AI_Video_Processing.BatchFolderActions.TopazVeai;
 using Automated_AI_Video_Processing.FFmpegFunctions;
+using Automated_AI_Video_Processing.UserInterface.Menus;
 
 namespace Automated_AI_Video_Processing
 {
@@ -13,7 +14,9 @@ namespace Automated_AI_Video_Processing
             Console.WriteLine("Hello World!");
             
             //runFolder();
-            testFFmpeg();
+            //testFFmpeg();
+            
+            MainMenu.mainMenu.DisplayMenu();
             
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
