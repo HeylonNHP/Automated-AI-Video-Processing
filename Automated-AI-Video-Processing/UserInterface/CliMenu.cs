@@ -15,17 +15,24 @@ namespace Automated_AI_Video_Processing.UserInterface
 
         public void DisplayMenu()
         {
+            Func<int,string,string> getMenuLine = (int index, string caption) =>
+            {
+                return $"{index}). {caption}";
+            };
+            
             int choice = -1;
             while (choice > 0 || choice == -1)
             {
                 // Write title
                 Console.WriteLine($"<--- {menuTitleInternal} --->");
+                
+                Console.WriteLine(getMenuLine(0,"Quit"));
 
                 for (int i = 0; i < menuItemsInternal.Length; ++i)
                 {
                     CliMenuItem cliMenuItem = menuItemsInternal[i];
 
-                    Console.WriteLine($"{i + 1}). {cliMenuItem.caption}");
+                    Console.WriteLine(getMenuLine(i+1,cliMenuItem.caption));
                 }
                 
                 Console.Write(">>> ");
