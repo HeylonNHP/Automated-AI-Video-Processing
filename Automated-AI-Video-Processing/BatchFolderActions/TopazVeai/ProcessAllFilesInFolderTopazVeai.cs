@@ -12,10 +12,12 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
         public const int DESIRED_HEIGHT = 1080;
         private bool moveNext = true;
         private string processingFolderPath;
+        private int cudaDevice;
 
-        public ProcessAllFilesInFolderTopazVeai(string path)
+        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0)
         {
             processingFolderPath = path;
+            this.cudaDevice = this.cudaDevice;
         }
 
         public void runAsync(int desiredHeight = DESIRED_HEIGHT)
@@ -55,7 +57,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             var veaiInstance = new TopazVideoEnhanceAI(
                 filepath, TopazVeaiOutputFormats.mov_proreshq,
                 TopazVeaiModels.amq13,
-                1, new TopazVeaiScalingDetails(scaleToVideoRes.X, scaleToVideoRes.Y));
+                this.cudaDevice, new TopazVeaiScalingDetails(scaleToVideoRes.X, scaleToVideoRes.Y));
 
             veaiInstance.onTopazVeaiFinished += (sender, args) =>
             {

@@ -17,8 +17,9 @@ namespace Automated_AI_Video_Processing.UserInterface.Menus
             Console.WriteLine("Specify the folder path:");
             string path = CliMenu.getStringInput();
             Console.WriteLine("Target video height");
-            int height = int.Parse(CliMenu.getStringInput(ProcessAllFilesInFolderTopazVeai.DESIRED_HEIGHT.ToString())); 
-            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path);
+            int height = int.Parse(CliMenu.getStringInput(ProcessAllFilesInFolderTopazVeai.DESIRED_HEIGHT.ToString()));
+            int cudaDevice = int.Parse(CliMenu.getStringInput("0"));
+            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path, cudaDevice);
             batchVeai.runAsync(height);
             Console.WriteLine("Running Veai async...");
         }
