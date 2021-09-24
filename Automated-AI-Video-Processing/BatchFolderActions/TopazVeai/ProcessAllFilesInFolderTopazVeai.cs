@@ -17,7 +17,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
         public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0)
         {
             processingFolderPath = path;
-            this.cudaDevice = this.cudaDevice;
+            this.cudaDevice = cudaDevice;
         }
 
         public void runAsync(int desiredHeight = DESIRED_HEIGHT)
