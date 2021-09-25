@@ -10,7 +10,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
     }
     public class RifeColabGuiSettings
     {
-        private string inputFileInternal;
+        private string _inputFile;
         private InterpolationFactorOptions _interpolationFactorOptions;
         private bool loopable;
         private int[] gpuIds;
@@ -24,13 +24,13 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             int batchSize = 1,
             bool autoEncode = true)
         {
-            inputFileInternal = inputFile;
+            _inputFile = inputFile;
             if (gpuIds == null)
             {
                 gpuIds = new int[] { 0 };
             }
 
-            this.inputFileInternal = inputFile;
+            this._inputFile = inputFile;
             this._interpolationFactorOptions = interpolationFactorOptions;
             this.loopable = loopable;
             this.gpuIds = gpuIds;
@@ -38,10 +38,10 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             this.autoEncode = autoEncode;
         }
 
-        public string InputFileInternal
+        public string InputFile
         {
-            get => inputFileInternal;
-            set => inputFileInternal = value;
+            get => _inputFile;
+            set => _inputFile = value;
         }
 
         public InterpolationFactorOptions InterpolationFactorOptions
@@ -77,9 +77,9 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
         public override string ToString()
         {
             string outputCommandLineArgs = "";
-            if (inputFileInternal != null)
+            if (_inputFile != null)
             {
-                outputCommandLineArgs += $"-i {inputFileInternal} ";
+                outputCommandLineArgs += $"-i {_inputFile} ";
             }
 
             if (_interpolationFactorOptions.interpolationFactor != null)

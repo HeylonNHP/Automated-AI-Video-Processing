@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Automated_AI_Video_Processing.AiProcessors;
+using Automated_AI_Video_Processing.AiProcessors.RCG;
 using Automated_AI_Video_Processing.GeneralFunctions;
 
 namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
@@ -13,11 +14,13 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
         private bool moveNext = true;
         private string processingFolderPath;
         private int cudaDevice;
+        private RifeColabGuiAI _rifeColabGuiAi;
 
-        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0)
+        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0, RifeColabGuiAI rifeColabGuiAi = null)
         {
             processingFolderPath = path;
             this.cudaDevice = cudaDevice;
+            this._rifeColabGuiAi = rifeColabGuiAi;
         }
 
         public void runAsync(int desiredHeight = DESIRED_HEIGHT)
@@ -61,6 +64,11 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
 
             veaiInstance.onTopazVeaiFinished += (sender, args) =>
             {
+                if (_rifeColabGuiAi != null)
+                {
+                    _rifeColabGuiAi.Settings.InputFile = args.outputFilePath;
+                    _rifeColabGuiAi.runInteroplationSingleFile();
+                }
                 moveNext = true;
                 Console.WriteLine($"Processed: {args.outputFilePath}");
             };

@@ -4,7 +4,8 @@
     {
         public static CliMenuItem[] menuItems = new[]
         {
-            new CliMenuItem("VEAI Options", VeaiSettingsMenu.menu.DisplayMenu)
+            new CliMenuItem("VEAI Options", VeaiSettingsMenu.menu.DisplayMenu),
+            new CliMenuItem("Rife Options",RifeSettingsMenu.menu.DisplayMenu)
         };
         
         public static CliMenu menu = new CliMenu("Settings Menu", menuItems);

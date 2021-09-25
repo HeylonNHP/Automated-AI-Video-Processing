@@ -14,9 +14,14 @@ namespace Automated_AI_Video_Processing
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            
-            //runFolder();
-            //testFFmpeg();
+            /*InterpolationFactorOptions interpolationFactorOptions = new InterpolationFactorOptions()
+                { mode = 3, outputFPS = 60};
+            RifeColabGuiSettings settings = new RifeColabGuiSettings(
+                @"C:\Users\Heylon\Desktop\Videos\camotliFlareon\170c13628ce07345cbfc95d4e7f3f35a.gif",
+                interpolationFactorOptions);
+            RifeColabGuiAI ai = new RifeColabGuiAI(settings);
+            ai.runInteroplationSingleFile(false);*/
+ 
             MainMenu.mainMenu.DisplayMenu();
             
             Console.WriteLine("Press any key to exit");

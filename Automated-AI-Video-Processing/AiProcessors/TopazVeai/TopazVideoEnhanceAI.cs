@@ -1,10 +1,16 @@
 ﻿
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using Automated_AI_Video_Processing.ProcessExecution;
 
 namespace Automated_AI_Video_Processing.AiProcessors
 {
+    public struct SwapExtensionDetails
+    {
+        public string name;
+        public bool swapped;
+    }
     public class TopazVideoEnhanceAI
     {
         private string inputFilename;
@@ -42,6 +48,9 @@ namespace Automated_AI_Video_Processing.AiProcessors
                     break;
             }
 
+            SwapExtensionDetails nameSwapDetails = swapGifFileToAvi(inputFilename);
+            inputFilename = nameSwapDetails.name;
+
             string args = String.Format("-i \"{0}\" -f {1} {2} -m {3} -c {4}",
                 inputFilename,
                 outputFormat.ToString(),
@@ -66,6 +75,10 @@ namespace Automated_AI_Video_Processing.AiProcessors
                     {
                         line = line.Replace(markerText, "");
                         onTopazVeaiFinished?.Invoke(this,new TopazVeaiFinishedEventArgs(line));
+                        if (nameSwapDetails.swapped)
+                        {
+                            SwapExtensionDetails swapBackDetails = swapAviFileToGif(inputFilename);
+                        }
                     }
                     line = stdOut.ReadLine();
                 }
@@ -80,6 +93,41 @@ namespace Automated_AI_Video_Processing.AiProcessors
             var match = matches[0];
 
             return match.Groups[1].Value + "-" + match.Groups[2].Value;
+        }
+
+        private SwapExtensionDetails swapAviFileToGif(string inputFilename)
+        {
+            if (getExtension(inputFilename).ToLower() == "avi")
+            {
+                
+                return new SwapExtensionDetails(){name = setExtension(inputFilename,"gif"), swapped = true};
+            }
+
+            return new SwapExtensionDetails(){name = inputFilename,swapped = false};
+        }
+
+        private SwapExtensionDetails swapGifFileToAvi(string inputFilename)
+        {
+            if (getExtension(inputFilename).ToLower() == "gif")
+            {
+                return new SwapExtensionDetails(){name = setExtension(inputFilename,"avi"),swapped = true};
+            }
+
+            return new SwapExtensionDetails(){name = inputFilename,swapped = false};
+        }
+
+        private string getExtension(string inputFilename)
+        {
+            var extensionDotPos = inputFilename.LastIndexOf('.')+1;
+            return inputFilename.Substring(extensionDotPos, inputFilename.Length - extensionDotPos);
+        }
+
+        private string setExtension(string inputFilename,string extension)
+        {
+            var extensionDotPos = inputFilename.LastIndexOf('.');
+            string newName = inputFilename.Substring(0, extensionDotPos) + $".{extension}";
+            File.Move(inputFilename,newName);
+            return newName;
         }
     }
 }

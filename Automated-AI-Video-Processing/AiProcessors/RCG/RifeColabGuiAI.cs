@@ -14,6 +14,12 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             this.settings = settings;
         }
 
+        public RifeColabGuiSettings Settings
+        {
+            get => settings;
+            set => settings = value;
+        }
+
         public void runInteroplationSingleFile(bool async = false)
         {
             LaunchProcess process = new LaunchProcess("python",
