@@ -76,5 +76,10 @@ namespace Automated_AI_Video_Processing.ProcessExecution
                 selectedProcess.WaitForExit();
             }
         }
+
+        public void WaitForExit()
+        {
+            selectedProcess.WaitForExit();
+        }
     }
 }

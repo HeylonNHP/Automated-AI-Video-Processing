@@ -74,6 +74,7 @@ namespace Automated_AI_Video_Processing.AiProcessors
                     if (line.Contains(markerText))
                     {
                         line = line.Replace(markerText, "");
+                        line = line.Replace(@"/", @"\");
                         onTopazVeaiFinished?.Invoke(this,new TopazVeaiFinishedEventArgs(line));
                         if (nameSwapDetails.swapped)
                         {
