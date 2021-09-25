@@ -15,14 +15,15 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
 
         public void runInteroplationSingleFile(bool async = false)
         {
-            LaunchProcess process = new LaunchProcess("python",$"{ProgramFilePaths.RifeColabGuiSingleAllSteps} {settings.ToString()}");
+            LaunchProcess process = new LaunchProcess("python",
+                $"{ProgramFilePaths.RifeColabGuiSingleAllSteps} {settings.ToString()}");
             process.getStartInfo.WorkingDirectory = ProgramFilePaths.RifeColabGuiFolder;
             process.redirectStdOut = true;
             process.run(!async);
 
             StreamReader stdOut = process.stdOut;
 
-            process.processExited += ((sender, args) =>
+            Action EndOfExecutionProcessing = () =>
             {
                 string line = stdOut.ReadLine();
                 while (line != null)
@@ -30,7 +31,16 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                     Console.WriteLine(line);
                     line = stdOut.ReadLine();
                 }
-            });
+            };
+
+            if (async)
+            {
+                process.processExited += ((sender, args) => { EndOfExecutionProcessing(); });
+            }
+            else
+            {
+                EndOfExecutionProcessing();
+            }
         }
     }
 }
