@@ -6,6 +6,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
 {
     public class RifeColabGuiAI
     {
+        public event EventHandler<RifeColabGuiFinishedEventArgs> rifeFinished; 
         private RifeColabGuiSettings settings;
 
         public RifeColabGuiAI(RifeColabGuiSettings settings)
@@ -31,6 +32,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                     Console.WriteLine(line);
                     line = stdOut.ReadLine();
                 }
+                rifeFinished?.Invoke(this, new RifeColabGuiFinishedEventArgs());
             };
 
             if (async)
