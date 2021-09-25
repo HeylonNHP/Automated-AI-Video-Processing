@@ -1,4 +1,8 @@
-﻿namespace Automated_AI_Video_Processing.AiProcessors.RCG
+﻿using System;
+using System.IO;
+using Automated_AI_Video_Processing.ProcessExecution;
+
+namespace Automated_AI_Video_Processing.AiProcessors.RCG
 {
     public class RifeColabGuiAI
     {
@@ -11,7 +15,22 @@
 
         public void runInteroplationSingleFile(bool async = false)
         {
-            string RifeArgs = "";
+            LaunchProcess process = new LaunchProcess("python",$"{ProgramFilePaths.RifeColabGuiSingleAllSteps} {settings.ToString()}");
+            process.getStartInfo.WorkingDirectory = ProgramFilePaths.RifeColabGuiFolder;
+            process.redirectStdOut = true;
+            process.run(!async);
+
+            StreamReader stdOut = process.stdOut;
+
+            process.processExited += ((sender, args) =>
+            {
+                string line = stdOut.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = stdOut.ReadLine();
+                }
+            });
         }
     }
 }

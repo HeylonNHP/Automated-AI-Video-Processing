@@ -9,11 +9,12 @@ namespace Automated_AI_Video_Processing.ProcessExecution
 
         public static string FFmpeg = "ffmpeg";
 
+        public static string RifeColabGuiFolder = @"C:\Users\Heylon\Documents\RIFEstuff\RIFE-Colab";
         public static string RifeColabGuiSingleAllSteps = new Func<string>(() =>
         {
             try
             {
-                return getRifeColabGuiSingleAllSteps(@"C:\Users\Heylon\Documents\RIFEstuff\RIFE-Colab");
+                return getRifeColabGuiSingleAllSteps(RifeColabGuiFolder);
             }
             catch (Exception ex)
             {

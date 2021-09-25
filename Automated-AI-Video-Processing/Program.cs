@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Automated_AI_Video_Processing.AiProcessors;
+using Automated_AI_Video_Processing.AiProcessors.RCG;
 using Automated_AI_Video_Processing.BatchFolderActions.TopazVeai;
 using Automated_AI_Video_Processing.FFmpegFunctions;
 using Automated_AI_Video_Processing.ProcessExecution;
@@ -16,7 +17,6 @@ namespace Automated_AI_Video_Processing
             
             //runFolder();
             //testFFmpeg();
-            Console.WriteLine(ProgramFilePaths.RifeColabGuiSingleAllSteps);
             MainMenu.mainMenu.DisplayMenu();
             
             Console.WriteLine("Press any key to exit");
