@@ -26,13 +26,17 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
 
             Action EndOfExecutionProcessing = () =>
             {
+                string outputfile = null;
                 string line = stdOut.ReadLine();
                 while (line != null)
                 {
-                    Console.WriteLine(line);
+                    if (line.Contains("Created output file: "))
+                    {
+                        outputfile = line.Replace("Created output file: ", "");
+                    }
                     line = stdOut.ReadLine();
                 }
-                rifeFinished?.Invoke(this, new RifeColabGuiFinishedEventArgs());
+                rifeFinished?.Invoke(this, new RifeColabGuiFinishedEventArgs(outputfile));
             };
 
             if (async)

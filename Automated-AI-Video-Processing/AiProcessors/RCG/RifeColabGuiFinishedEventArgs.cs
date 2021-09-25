@@ -6,7 +6,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
     {
         private string outputFilename;
 
-        public RifeColabGuiFinishedEventArgs(string outputFilename = "")
+        public RifeColabGuiFinishedEventArgs(string outputFilename = null)
         {
             this.outputFilename = outputFilename;
         }

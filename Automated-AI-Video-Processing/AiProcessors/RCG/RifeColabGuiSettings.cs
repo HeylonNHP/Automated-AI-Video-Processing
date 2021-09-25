@@ -89,7 +89,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
 
             if (_interpolationFactorOptions.outputFPS != null)
             {
-                throw new NotImplementedException();
+                outputCommandLineArgs += $"-targetfpsmode {true} -targetfps {_interpolationFactorOptions.outputFPS} ";
             }
 
             outputCommandLineArgs += $"-mode {_interpolationFactorOptions.mode} ";
