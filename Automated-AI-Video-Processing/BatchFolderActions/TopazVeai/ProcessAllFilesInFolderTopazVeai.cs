@@ -38,13 +38,12 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
 
                 foreach (var file in files)
                 {
+                    moveNext = false;
+                    runVeai(file, desiredHeight);
                     while (!moveNext)
                     {
                         Thread.Sleep(1000);
                     }
-
-                    moveNext = false;
-                    runVeai(file, desiredHeight);
                 }
             };
             backgroundWorker.RunWorkerCompleted += (sender, args) =>
