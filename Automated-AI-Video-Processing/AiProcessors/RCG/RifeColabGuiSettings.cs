@@ -16,13 +16,15 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
         private int[] gpuIds;
         private int batchSize;
         private bool autoEncode;
+        private int maxBatchThreadRestarts;
         
         public RifeColabGuiSettings(string inputFile,
             InterpolationFactorOptions interpolationFactorOptions,
             bool loopable = false,
             int[] gpuIds = null,
             int batchSize = 1,
-            bool autoEncode = true)
+            bool autoEncode = true,
+            int maxBatchThreadRestarts = 20)
         {
             _inputFile = inputFile;
             if (gpuIds == null)
@@ -36,6 +38,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             this.gpuIds = gpuIds;
             this.batchSize = 1;
             this.autoEncode = autoEncode;
+            this.maxBatchThreadRestarts = maxBatchThreadRestarts;
         }
 
         public string InputFile
@@ -111,6 +114,8 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                 outputCommandLineArgs += $"-autoencode {autoEncode} ";
             }
 
+            outputCommandLineArgs += $"-maxBatchBackupThreadRestarts {maxBatchThreadRestarts} ";
+
             return outputCommandLineArgs.Trim();
         }
 
@@ -123,7 +128,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                     interpolationFactor = _interpolationFactorOptions.interpolationFactor,
                     outputFPS = _interpolationFactorOptions.outputFPS,
                 },
-                loopable, (int[])gpuIds.Clone(), batchSize, autoEncode);
+                loopable, (int[])gpuIds.Clone(), batchSize, autoEncode,maxBatchThreadRestarts);
             return newSettings;
         }
     }
