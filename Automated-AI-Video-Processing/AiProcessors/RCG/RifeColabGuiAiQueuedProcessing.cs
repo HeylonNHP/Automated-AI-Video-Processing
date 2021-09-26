@@ -8,6 +8,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
     {
         private RifeColabGuiAI _rifeColabGuiAi;
         private bool runQueue = false;
+        private bool stopOnQueueFinished = false;
         private Queue<RifeColabGuiSettings> queuedInterpolations = new Queue<RifeColabGuiSettings>();
         BackgroundWorker backgroundWorker = new BackgroundWorker();
 
@@ -29,6 +30,10 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                         }
                         else
                         {
+                            if (stopOnQueueFinished)
+                            {
+                                break;
+                            }
                             Thread.Sleep(1000);
                         }
                     }
@@ -46,6 +51,15 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
         {
             runQueue = false;
             backgroundWorker.CancelAsync();
+        }
+
+        public void allowQueueToCompleteThenStop()
+        {
+            stopOnQueueFinished = true;
+        }
+        public void disableAllowQueueToCompleteThenStop()
+        {
+            stopOnQueueFinished = false;
         }
 
         public Queue<RifeColabGuiSettings> QueuedInterpolations
