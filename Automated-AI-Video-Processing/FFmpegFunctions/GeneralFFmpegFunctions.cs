@@ -27,7 +27,7 @@ namespace Automated_AI_Video_Processing.FFmpegFunctions
                 {
                     var regex = new Regex(@"([0-9]+)x([0-9]+)");
                     var matches = regex.Matches(line);
-                    var match = matches[0];
+                    var match = matches[^1];
                     var width = int.Parse(match.Groups[1].Value);
                     var height = int.Parse(match.Groups[2].Value);
                     output.X = width;
