@@ -31,7 +31,7 @@ namespace Automated_AI_Video_Processing.UserInterface.Menus
                 }
             }
             
-            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path, cudaDevice, rifeSettings != null? new RifeColabGuiAI(rifeSettings):null);
+            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path, cudaDevice, rifeSettings);
             batchVeai.runAsync(height);
             Console.WriteLine("Running Veai async...");
         }

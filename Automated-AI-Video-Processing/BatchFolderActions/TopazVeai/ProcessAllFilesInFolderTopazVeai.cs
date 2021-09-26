@@ -14,13 +14,18 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
         private bool moveNext = true;
         private string processingFolderPath;
         private int cudaDevice;
-        private RifeColabGuiAI _rifeColabGuiAi;
+        private RifeColabGuiAiQueuedProcessing _rifeColabGuiAi;
+        private RifeColabGuiSettings _rifeColabGuiSettings;
 
-        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0, RifeColabGuiAI rifeColabGuiAi = null)
+        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0, RifeColabGuiSettings rifeColabGuiAiSettings = null)
         {
             processingFolderPath = path;
             this.cudaDevice = cudaDevice;
-            this._rifeColabGuiAi = rifeColabGuiAi;
+            this._rifeColabGuiSettings = rifeColabGuiAiSettings;
+            if (rifeColabGuiAiSettings != null)
+            {
+            _rifeColabGuiAi = new RifeColabGuiAiQueuedProcessing(new RifeColabGuiAI(_rifeColabGuiSettings));
+            }
         }
 
         public void runAsync(int desiredHeight = DESIRED_HEIGHT)
@@ -28,6 +33,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += (sender, args) =>
             {
+                _rifeColabGuiAi?.startQueue();
                 var files = RecursiveFolderSearch.Search(processingFolderPath);
 
                 foreach (var file in files)
@@ -44,6 +50,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             backgroundWorker.RunWorkerCompleted += (sender, args) =>
             {
                 Console.WriteLine("Finished processing folder");
+                _rifeColabGuiAi?.allowQueueToCompleteThenStop();
             };
             backgroundWorker.RunWorkerAsync();
         }
@@ -66,8 +73,9 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             {
                 if (_rifeColabGuiAi != null)
                 {
-                    _rifeColabGuiAi.Settings.InputFile = args.outputFilePath;
-                    _rifeColabGuiAi.runInteroplationSingleFile();
+                    RifeColabGuiSettings newSettings = _rifeColabGuiSettings.Clone();
+                    newSettings.InputFile = args.outputFilePath;
+                    _rifeColabGuiAi?.QueuedInterpolations.Enqueue(newSettings);
                 }
                 moveNext = true;
                 Console.WriteLine($"Processed: {args.outputFilePath}");

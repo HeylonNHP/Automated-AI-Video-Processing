@@ -32,6 +32,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
                         {
                             if (stopOnQueueFinished)
                             {
+                                runQueue = false;
                                 break;
                             }
                             Thread.Sleep(1000);

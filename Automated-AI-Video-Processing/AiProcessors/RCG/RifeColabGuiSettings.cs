@@ -113,5 +113,18 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
 
             return outputCommandLineArgs.Trim();
         }
+
+        public RifeColabGuiSettings Clone()
+        {
+            RifeColabGuiSettings newSettings = new RifeColabGuiSettings((string)(_inputFile != null? _inputFile.Clone():null),
+                new InterpolationFactorOptions()
+                {
+                    mode = _interpolationFactorOptions.mode,
+                    interpolationFactor = _interpolationFactorOptions.interpolationFactor,
+                    outputFPS = _interpolationFactorOptions.outputFPS,
+                },
+                loopable, (int[])gpuIds.Clone(), batchSize, autoEncode);
+            return newSettings;
+        }
     }
 }
