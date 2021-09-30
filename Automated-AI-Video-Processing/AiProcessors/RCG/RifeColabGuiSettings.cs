@@ -17,6 +17,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
         private int batchSize;
         private bool autoEncode;
         private int maxBatchThreadRestarts;
+        private bool exitOnMaxBatchThreadRestarts;
         
         public RifeColabGuiSettings(string inputFile,
             InterpolationFactorOptions interpolationFactorOptions,
@@ -24,7 +25,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             int[] gpuIds = null,
             int batchSize = 1,
             bool autoEncode = true,
-            int maxBatchThreadRestarts = 20)
+            int maxBatchThreadRestarts = 20, bool exitOnMaxBatchThreadRestarts = true)
         {
             _inputFile = inputFile;
             if (gpuIds == null)
@@ -39,6 +40,7 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             this.batchSize = 1;
             this.autoEncode = autoEncode;
             this.maxBatchThreadRestarts = maxBatchThreadRestarts;
+            this.exitOnMaxBatchThreadRestarts = exitOnMaxBatchThreadRestarts;
         }
 
         public string InputFile
@@ -115,6 +117,8 @@ namespace Automated_AI_Video_Processing.AiProcessors.RCG
             }
 
             outputCommandLineArgs += $"-maxBatchBackupThreadRestarts {maxBatchThreadRestarts} ";
+
+            outputCommandLineArgs += $"-exitOnMaxBatchBackupThreadRestarts {exitOnMaxBatchThreadRestarts} ";
 
             return outputCommandLineArgs.Trim();
         }
