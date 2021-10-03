@@ -17,8 +17,9 @@ namespace Automated_AI_Video_Processing.UserInterface.Menus
         {
             Console.WriteLine("Specify the folder path:");
             string path = CliMenu.getStringInput();
-            Console.WriteLine("Target video height");
+            Console.WriteLine("Target video height:");
             int height = int.Parse(CliMenu.getStringInput(ProcessAllFilesInFolderTopazVeai.DESIRED_HEIGHT.ToString()));
+            Console.WriteLine("Topaz VEAI GPU ID:");
             int cudaDevice = int.Parse(CliMenu.getStringInput("0"));
 
             RifeColabGuiSettings rifeSettings = null;
