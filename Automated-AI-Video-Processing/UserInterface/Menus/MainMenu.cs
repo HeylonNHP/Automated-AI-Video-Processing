@@ -22,17 +22,25 @@ namespace Automated_AI_Video_Processing.UserInterface.Menus
             Console.WriteLine("Topaz VEAI GPU ID:");
             int cudaDevice = int.Parse(CliMenu.getStringInput("0"));
 
-            RifeColabGuiSettings rifeSettings = null;
+            RifeColabGuiSettings rifeSettings = new Func<RifeColabGuiSettings>(() =>
             {
                 Console.WriteLine("Use Rife?:");
                 bool useRife = CliMenu.getStringInput("false").ToLower() == "true";
                 if (useRife)
                 {
-                    rifeSettings = RifeSettings();
+                    return RifeSettings();
                 }
-            }
-            
-            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path, cudaDevice, rifeSettings);
+
+                return null;
+            })();
+
+            bool processGifFilesWithVeai = new Func<bool>(() =>
+            {
+                Console.WriteLine("Upscale GIF files?:");
+                return CliMenu.getStringInput("false").ToLower() == "true";
+            })();
+
+            ProcessAllFilesInFolderTopazVeai batchVeai = new ProcessAllFilesInFolderTopazVeai(path, cudaDevice, rifeSettings,processGifFilesWithVeai);
             batchVeai.runAsync(height);
             Console.WriteLine("Running Veai async...");
         }

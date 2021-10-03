@@ -18,19 +18,21 @@ namespace Automated_AI_Video_Processing.AiProcessors
         private TopazVeaiModels AiModel;
         private int CudaDevice;
         private TopazVeaiScalingDetails scalingDetails;
+        private bool processGifFiles;
 
         public event EventHandler<TopazVeaiFinishedEventArgs> onTopazVeaiFinished; 
 
         public TopazVideoEnhanceAI(string inputFilename,
             TopazVeaiOutputFormats outputFormat,
             TopazVeaiModels aiModel, int cudaDevice,
-            TopazVeaiScalingDetails scalingDetails)
+            TopazVeaiScalingDetails scalingDetails, bool processGifFiles = false)
         {
             this.inputFilename = inputFilename;
             this.outputFormat = outputFormat;
             this.AiModel = aiModel;
             this.CudaDevice = cudaDevice;
             this.scalingDetails = scalingDetails;
+            this.processGifFiles = processGifFiles;
         }
 
         public void runAsync()
@@ -50,6 +52,12 @@ namespace Automated_AI_Video_Processing.AiProcessors
 
             SwapExtensionDetails nameSwapDetails = swapGifFileToAvi(inputFilename);
             inputFilename = nameSwapDetails.name;
+            if (nameSwapDetails.swapped && !processGifFiles)
+            {
+                var swapBackDetails = swapAviFileToGif(nameSwapDetails.name);
+                onTopazVeaiFinished?.Invoke(this, new TopazVeaiFinishedEventArgs(swapBackDetails.name));
+                return;
+            }
 
             string args = String.Format("-i \"{0}\" -f {1} {2} -m {3} -c {4}",
                 inputFilename,

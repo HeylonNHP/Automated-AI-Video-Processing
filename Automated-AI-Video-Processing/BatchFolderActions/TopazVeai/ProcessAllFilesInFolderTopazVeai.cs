@@ -14,18 +14,22 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
         private bool moveNext = true;
         private string processingFolderPath;
         private int cudaDevice;
+        private bool veaiGifFiles;
         private RifeColabGuiAiQueuedProcessing _rifeColabGuiAi;
         private RifeColabGuiSettings _rifeColabGuiSettings;
 
-        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0, RifeColabGuiSettings rifeColabGuiAiSettings = null)
+        public ProcessAllFilesInFolderTopazVeai(string path, int cudaDevice = 0,
+            RifeColabGuiSettings rifeColabGuiAiSettings = null, bool veaiGifFiles = false)
         {
             processingFolderPath = path;
             this.cudaDevice = cudaDevice;
             this._rifeColabGuiSettings = rifeColabGuiAiSettings;
             if (rifeColabGuiAiSettings != null)
             {
-            _rifeColabGuiAi = new RifeColabGuiAiQueuedProcessing(new RifeColabGuiAI(_rifeColabGuiSettings));
+                _rifeColabGuiAi = new RifeColabGuiAiQueuedProcessing(new RifeColabGuiAI(_rifeColabGuiSettings));
             }
+
+            this.veaiGifFiles = veaiGifFiles;
         }
 
         public void runAsync(int desiredHeight = DESIRED_HEIGHT)
@@ -66,7 +70,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
             var veaiInstance = new TopazVideoEnhanceAI(
                 filepath, TopazVeaiOutputFormats.mov_proreshq,
                 TopazVeaiModels.amq13,
-                this.cudaDevice, new TopazVeaiScalingDetails(scaleToVideoRes.X, scaleToVideoRes.Y));
+                this.cudaDevice, new TopazVeaiScalingDetails(scaleToVideoRes.X, scaleToVideoRes.Y), veaiGifFiles);
 
             veaiInstance.onTopazVeaiFinished += (sender, args) =>
             {
@@ -76,6 +80,7 @@ namespace Automated_AI_Video_Processing.BatchFolderActions.TopazVeai
                     newSettings.InputFile = args.outputFilePath;
                     _rifeColabGuiAi?.QueuedInterpolations.Enqueue(newSettings);
                 }
+
                 moveNext = true;
                 Console.WriteLine($"Processed: {args.outputFilePath}");
             };
